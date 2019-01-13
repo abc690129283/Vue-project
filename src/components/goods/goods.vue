@@ -45,12 +45,14 @@
       </div>
     <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
     </div>
+    <food :food="selectedFood" ref="food"></food>
   </div>
 </template>
 <script>
 import BScroll from "better-scroll";
 import shopcart from "../shopcart/shopcart.vue";
 import cartcontrol from "../cartcontrol/cartcontrol.vue";
+import food from "../food/food.vue";
 const ERR_OK = 0;
 export default {
   props: {
@@ -147,6 +149,13 @@ export default {
       let el = foodList[index];
       // 点击当前节点 跳到相应的内容
       this.foodScroll.scrollToElement(el, 300);
+    },
+    selectFood(food,event){
+       if (!event._constructed) {
+              return;
+       }
+       this.selectedFood = food;
+       this.$refs.food.show();
     }
   },
   created() {
@@ -164,7 +173,8 @@ export default {
   },
   components: {
     shopcart,
-    cartcontrol
+    cartcontrol,
+    food
   },
   mounted(){
       
